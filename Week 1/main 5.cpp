@@ -19,5 +19,6 @@ int main ()
         result = N - (N * (X / 100));
     }
     cout << result;
+    
     return 0;
 }
