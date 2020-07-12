@@ -4,8 +4,7 @@
 
 using namespace std;
 
-int main ()
-{
+int main () {
     int n;
     int s;
     int ind = 0;
@@ -18,32 +17,23 @@ int main ()
 
     cin >> n;
 
-    for (int i = 0; i < n; ++i)
-    {
+    for (int i = 0; i < n; ++i) {
         cin >> s;
         v.push_back(s);
     }
-
-    for (auto w : v)
-    {
+    for (auto w : v) {
         all += w;
     }
     sred = all / n;
-
-    while (ind < v.size())
-    {
-        if (v[ind] > sred)
-        {
+    while (ind < v.size()) {
+        if (v[ind] > sred) {
             result.push_back(ind2);
         }
         ++ind;
         ++ind2;
     }
-
     cout << result.size() << endl;
-
-    for (auto w : result)
-    {
+    for (auto w : result) {
         cout << w << " ";
     }
     

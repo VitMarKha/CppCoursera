@@ -1,68 +1,75 @@
 #include "iostream"
 #include "string"
 #include "vector"
-#include "algorithm"
-
 using namespace std;
 
-int main ()
-{
-    const vector<int> dayInMounts = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+int main() {
+    int Q;
+    const vector<int> YEAR = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int month = 0;
+    vector<vector<string>> current_month(YEAR[month]);
+    cin >> Q;
 
-    int q;
-    cin >> q;
-    vector<vector<string>> currentMonth(dayInMounts[month]);
+    for (int i = 1; i <= Q; ++i) {
+        string command;
+        cin >> command;
 
-    for (int i = 0; i < q; ++i)
-    {
-        string comand;
-        cin >> comand;
-
-        if (comand == "ADD")
-        {
+        if (command == "ADD") {
             int day;
-            string s;
-            cin >> day >> s;
-            currentMonth[day - 1].push_back(s);
-
-        }
-        else if (comand == "DUMP")
-        {
+            string task;
+            cin >> day;
+            cin >> task;
+            current_month[--day].push_back(task);
+        } else if (command == "DUMP") {
             int day;
             cin >> day;
-            --day;
-
-            cout << currentMonth[day].size() << " ";
-            for (const string& concern : currentMonth[day])
-            {
-                cout << concern << " ";
+            cout << current_month[--day].size() << " ";
+            for (auto c : current_month[day]) {
+                cout << c << " ";
             }
             cout << endl;
-        }
-        else if (comand == "NEXT")
-        {
-            const int tmpVector = dayInMounts[month];
+        } else if (command == "NEXT") {
+            int previous_month = YEAR[month];
             ++month;
-            if (month > 11)
-            {
+            int new_month;
+            if (month == 12) {
                 month = 0;
+                new_month = YEAR[month];
+            } else {
+                new_month = YEAR[month];
             }
-
-            const int newTmpVector = dayInMounts[month];
-
-            if (newTmpVector < tmpVector)
-            {
-                vector<string>& lastDayConcerns = currentMonth[newTmpVector - 1];
-
-                for (int day = newTmpVector; day < tmpVector; ++day)
-                {
-                    lastDayConcerns.insert(end(lastDayConcerns), begin(currentMonth[day]), end(currentMonth[day]));
+            if (new_month < previous_month) {
+                vector<string> tmp;
+                for (int step = new_month; step < previous_month; ++step) {
+                    for (auto& c : current_month[step]){
+                        tmp.push_back(c);
+                    }
                 }
+                --new_month;
+                for (auto c : tmp) {
+                    current_month[new_month].push_back(c);
+                }
+                new_month = new_month + 2;
+                for (int step = new_month; step <= previous_month; ++step){
+                    current_month.pop_back();
+                }
+            } else {
+                current_month.resize(current_month.size() + (new_month - previous_month));
             }
-            currentMonth.resize(newTmpVector);
         }
     }
-
+//Проверка
+//    cout << endl;
+//    int i = 1;
+//    int j = 1;
+//    for (auto v1 : current_month) {
+//        cout << "День " << i << endl;
+//        for (auto v2 : v1) {
+//            cout << "Задача " << j << " " << v2 << endl;
+//            ++j;
+//        }
+//        ++i;
+//    }
+//    cout << "Размер месяца: " << current_month.size();
     return 0;
 }

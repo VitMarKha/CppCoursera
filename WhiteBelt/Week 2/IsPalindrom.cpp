@@ -3,33 +3,25 @@
 
 using namespace std;
 
-bool IsPalindrom(string str)
-{
+bool IsPalindrom(string str) {
     int firstChar = 0;
     int endChar = str.size() - 1;
     bool result;
     int i = 0;
 
-    while (i < str.size())
-    {
-        if (str[firstChar] == str[endChar])
-        {
+    while (i < str.size()) {
+        if (str[firstChar] == str[endChar]) {
             ++firstChar;
             --endChar;
             ++i;
-        }
-        else
-        {
+        } else {
             break;
         }
     }
     
-    if (i == str.size())
-    {
+    if (i == str.size()) {
         result = true;
-    }
-    else
-    {
+    } else {
         result = false;
     }
 
